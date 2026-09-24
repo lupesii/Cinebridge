@@ -1,0 +1,14 @@
+services:
+  postgres_db:
+    image: postgres:17
+    container_name: cinebridge-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    env_file:
+      - ../.env.development
+    volumes:
+      - cinebridge-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  cinebridge-postgres-data:

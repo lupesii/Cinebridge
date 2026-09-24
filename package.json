@@ -1,0 +1,33 @@
+{
+  "name": "Cinebridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc && NODE_ENV=development node --watch ./dist/src/server.js",
+    "db:up": "docker compose -f infra/compose.yaml up -d && npm run wait-for-postgres && npm run migrate",
+    "db:stop": "docker compose -f infra/compose.yaml stop",
+    "wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
+    "migrate": "npx prisma migrate dev && npx prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^11.3.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "dotenv": "^18.0.3",
+    "fastify": "^5.12.5",
+    "fastify-type-provider-zod": "^7.0.0",
+    "pg": "^8.23.0",
+    "typescript": "^7.0.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "@types/pg": "^8.23.1",
+    "prisma": "^7.10.0"
+  }
+}

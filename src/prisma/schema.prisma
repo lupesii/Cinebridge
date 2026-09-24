@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Papel {
+  DIRETOR
+  DIRETOR_FOTOGRAFIA
+  SONOPLASTA
+  EDITOR
+  ROTEIRISTA
+  EFEITOS_VISUAIS
+}
+
+enum tipoCaptacao {
+  DOCUMENTARIO
+  FICCAO
+  ANIMACAO
+  ACAO
+  AVENTURA
+}
+
+model Projeto {
+  id          String   @id @default(uuid()) @db.Uuid
+  genero      String   @db.Text
+  duracao     Int      @db.Integer
+  orcamento   Int      @db.Integer
+  prazo       DateTime @db.Date
+  //  tipoCaptacao tipoCaptacao
+  localizacao String   @db.Text
+
+  equipe Equipe?
+
+  @@map("projeto")
+}
+
+model Equipe {
+  id           String   @id @default(uuid()) @db.Uuid
+  dataFormacao DateTime @map("data_formacao") @db.Date
+  status       String   @db.Text
+  projetoId    String   @unique @map("projeto_id") @db.Uuid
+
+  projeto       Projeto        @relation(fields: [projetoId], references: [id], onDelete: Cascade)
+  membrosEquipe MembroEquipe[]
+
+  @@map("equipe")
+}
+
+model MembroEquipe {
+  id             String  @id @default(uuid()) @db.Uuid
+  papel          Papel
+  confirmado     Boolean @db.Boolean
+  equipeId       String  @map("equipe_id") @db.Uuid
+  profissionalId String  @db.Uuid
+
+  equipe       Equipe       @relation(fields: [equipeId], references: [id], onDelete: Cascade)
+  profissional Profissional @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+
+  @@map("membro_equipe")
+}
+
+model Profissional {
+  id                     String         @id @default(uuid()) @db.Uuid
+  nome                   String         @db.Text
+  disponibilidade_inicio String         @db.Text
+  disponibilidade_fim    String         @db.Text
+  precoMedio             Int            @db.Integer
+  competencias           Competencia[]
+  avaliacoes             Avaliacao[]
+  membroEquipe           MembroEquipe[]
+
+  @@map("profissional")
+}
+
+model Avaliacao {
+  id             String   @id @default(uuid()) @db.Uuid
+  nota           Int      @db.Integer
+  comentario     String   @db.Text
+  data           DateTime @db.Date
+  profissionalId String   @db.Uuid
+
+  profissional Profissional @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+
+  @@map("avaliacao")
+}
+
+model Competencia {
+  id             String @id @default(uuid()) @db.Uuid
+  nome           String @db.Text
+  nivel          Int    @db.Integer
+  profissionalId String @db.Uuid
+
+  profissional Profissional @relation(fields: [profissionalId], references: [id], onDelete: Cascade)
+
+  @@map("competencia")
+}
