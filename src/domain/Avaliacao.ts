@@ -8,6 +8,7 @@ export default class Avaliacao {
 		this.nota = nota;
 		this.comentario = comentario;
 		this.data = data;
+		this._profissionalId = _profissionalId;
 	}
 
 	get profissionalId() {

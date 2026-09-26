@@ -5,14 +5,16 @@ import {
 	validatorCompiler,
 	type ZodTypeProvider,
 } from "fastify-type-provider-zod";
-import dbConnector from "./plugins/db-connector.js";
+import { ProfissionalController } from "./controllers/profissionalController.js";
+import { dbPlugin } from "./plugins/db-connector.js";
+import profissionalPlugin from "./plugins/profissionalPlugin.js";
 
 export default async function buildServer(options = {}) {
 	const fastify = Fastify(options).withTypeProvider<ZodTypeProvider>();
 	fastify.setSerializerCompiler(serializerCompiler);
 	fastify.setValidatorCompiler(validatorCompiler);
 
-	fastify.setErrorHandler(function (error: FastifyError, request, reply) {
+	fastify.setErrorHandler(function (error: FastifyError, _request, reply) {
 		if (error.validation || (error.statusCode && error.statusCode < 500)) {
 			return reply.send(error);
 		}
@@ -32,7 +34,13 @@ export default async function buildServer(options = {}) {
 	await fastify.register(fastifyCors, {
 		origin: "*",
 	});
-	await fastify.register(dbConnector);
+	await fastify.register(dbPlugin);
+	await fastify.register(profissionalPlugin);
+
+	//controllers
+	await fastify.register(ProfissionalController, {
+		prefix: "/profissional",
+	});
 
 	return fastify;
 }

@@ -1,5 +1,5 @@
-import type Profissional from "../Profissional.js";
-import type Projeto from "../Projeto.js";
+import type Profissional from "../domain/Profissional.js";
+import type Projeto from "../domain/Projeto.js";
 
 export default interface VisitanteProjeto {
 	visitarProjeto(projeto: Projeto): any;

@@ -15,9 +15,8 @@ const startServer = async () => {
 		if (error instanceof PrismaClientKnownRequestError) {
 			throw new PrismaError(
 				"Não foi possivel conectar ao banco",
-				500,
-				error.code,
 				"Query Error",
+				error.code,
 			);
 		}
 		server.log.debug(error);

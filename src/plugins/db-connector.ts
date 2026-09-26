@@ -25,4 +25,4 @@ const dbConnector = async (fastify: FastifyInstance) => {
 	});
 };
 
-export default fastifyPlugin(dbConnector);
+export const dbPlugin = fastifyPlugin(dbConnector, { name: "dbConnector" });

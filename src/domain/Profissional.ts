@@ -3,11 +3,11 @@ import type Competencia from "./Competencia.js";
 
 export default class Profissional {
 	constructor(
-		private id: string,
-		private nome: string,
-		private disponibilidade_inicio: string,
-		private disponibilidade_fim: string,
-		private precoMedio: number,
+		readonly id: string,
+		public nome: string,
+		public disponibilidade_inicio: string,
+		public disponibilidade_fim: string,
+		public precoMedio: number,
 		private _competencias: Competencia[],
 		private _avaliacoes: Avaliacao[],
 	) {
@@ -29,8 +29,8 @@ export default class Profissional {
 		this._avaliacoes.push(avaliacao);
 	}
 
-	get competencias(): Avaliacao[] {
-		return this._avaliacoes;
+	get competencias(): Competencia[] {
+		return this._competencias;
 	}
 
 	set competencias(competencia: Competencia) {
