@@ -20,6 +20,15 @@ export default class ProfissionalRepository {
 						})),
 					},
 				},
+				avaliacoes: {
+					createMany: {
+						data: profissional.avaliacoes.map((a) => ({
+							nota: a.nota,
+							comentario: a.comentario,
+							data: a.data,
+						})),
+					},
+				},
 			},
 		});
 

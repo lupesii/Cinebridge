@@ -1,8 +1,8 @@
 export default class Avaliacao {
 	constructor(
-		private nota: number,
-		private comentario: string,
-		private data: Date,
+		readonly nota: number,
+		readonly comentario: string,
+		readonly data: Date,
 		private _profissionalId: string,
 	) {
 		this.nota = nota;

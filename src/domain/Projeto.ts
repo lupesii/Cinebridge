@@ -5,25 +5,27 @@ import type Equipe from "./Equipe.js";
 import type Profissional from "./Profissional.js";
 
 export default class Projeto {
+	private _equipe: Equipe | null;
+
 	constructor(
 		readonly id: string,
-		public genero: string,
-		public duracao: number,
-		public orcamento: number,
-		public prazo: Date,
+		readonly genero: string,
+		readonly duracao: number,
+		readonly orcamento: number,
+		readonly prazo: Date,
 		//	private tipoCaptacao: tipoCaptacao,
-		public localizacao: string,
-		public papeis: PapelObrigatorio[],
-		private _equipe: Equipe,
+		readonly localizacao: string,
+		readonly papeis: PapelObrigatorio[],
 	) {
 		this.id = id;
 		this.genero = genero;
 		this.duracao = duracao;
+		this.orcamento = orcamento;
 		this.prazo = prazo;
 		// this.tipoCaptacao = tipoCaptacao;
 		this.localizacao = localizacao;
 		this.papeis = papeis;
-		this._equipe = _equipe;
+		this._equipe = null;
 	}
 
 	aceitarRecomentacao(papel: Papel, profissional: Profissional) {}
@@ -32,12 +34,14 @@ export default class Projeto {
 
 	soliciarReavaliacao() {}
 
-	get equipe() {
+	get equipe(): Equipe | null {
 		return this._equipe;
 	}
 
-	set equipe(equipe: Equipe) {
+	set equipe(equipe: Equipe | null) {
 		this._equipe = equipe;
-		equipe.projetoId = this.id;
+		if (equipe !== null) {
+			equipe.projetoId = this.id;
+		}
 	}
 }

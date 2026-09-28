@@ -33,9 +33,20 @@ model Projeto {
   //  tipoCaptacao tipoCaptacao
   localizacao String   @db.Text
 
+  papeis PapelObrigatorio[]
   equipe Equipe?
 
   @@map("projeto")
+}
+
+model PapelObrigatorio {
+  projetoId String @id @map("projeto_id") @db.Uuid
+  papel     String @db.Text
+  peso      Int    @db.Integer
+
+  projeto Projeto @relation(fields: [projetoId], references: [id], onDelete: Cascade)
+
+  @@map("papel_obrigatorio")
 }
 
 model Equipe {

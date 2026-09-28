@@ -1,7 +1,7 @@
 import type { FastifyPluginAsync } from "fastify";
 import { fastifyPlugin } from "fastify-plugin";
 import ProfissionalRepository from "../repository/ProfissionalRepository.js";
-import ProfissionalService from "../services/profissionalService.js";
+import ProfissionalService from "../services/ProfissionalService.js";
 
 declare module "fastify" {
 	interface FastifyInstance {

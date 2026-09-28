@@ -1,0 +1,1 @@
+pensar em como desacoplar o prisma, necessário utilizar o padrão adapter;

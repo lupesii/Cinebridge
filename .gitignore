@@ -1,3 +1,4 @@
+.vitest
 node_modules
 .vscode
 .env.*

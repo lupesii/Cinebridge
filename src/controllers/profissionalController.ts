@@ -5,14 +5,13 @@ import Competencia from "../domain/Competencia.js";
 import Profissional from "../domain/Profissional.js";
 import { PostProfissionalDTOSchema } from "../models/ProfissionalDTO.js";
 
-export const ProfissionalController: FastifyPluginAsyncZod = async (
+export const profissionalController: FastifyPluginAsyncZod = async (
 	fastify,
-	opts,
 ) => {
 	fastify.post(
 		"/",
 		{ schema: { body: PostProfissionalDTOSchema } },
-		(request, reply) => {
+		async (request, reply) => {
 			const body = request.body;
 
 			const profissionalId = uuid();
@@ -33,13 +32,12 @@ export const ProfissionalController: FastifyPluginAsyncZod = async (
 				avaliacoes,
 			);
 
-			const nome = fastify.profissionalService.createProfissional(profissional);
+			const nome =
+				await fastify.profissionalService.createProfissional(profissional);
 
-			return reply
-				.send({
-					message: `Profissional ${nome} foi criado`,
-				})
-				.code(201);
+			return reply.status(201).send({
+				message: `Profissional ${nome} foi criado`,
+			});
 		},
 	);
 };

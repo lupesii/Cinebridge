@@ -1,8 +1,8 @@
 export default class Competencia {
 	constructor(
-		public nome: string,
-		public nivel: number,
-		public _profissionalId: string,
+		readonly nome: string,
+		readonly nivel: number,
+		private _profissionalId: string,
 	) {
 		this.nome = nome;
 		this.nivel = nivel;
